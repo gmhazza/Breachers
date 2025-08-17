@@ -14,6 +14,12 @@ config/name="Breachers"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=2200
+window/size/viewport_height=1080
+window/size/mode=2
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
