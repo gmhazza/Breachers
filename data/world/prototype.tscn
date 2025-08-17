@@ -1,12 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://nflj3dglkq8r"]
+[gd_scene load_steps=7 format=3 uid="uid://nflj3dglkq8r"]
+
+[ext_resource type="Material" uid="uid://dq1qmhaho1nlj" path="res://data/material/prototype_floor.tres" id="1_w1d5w"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w1d5w"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_1ieo3"]
+sky_material = SubResource("ProceduralSkyMaterial_w1d5w")
+
+[sub_resource type="Environment" id="Environment_apa7g"]
+background_mode = 2
+sky = SubResource("Sky_1ieo3")
+tonemap_mode = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_di6c2"]
+material = ExtResource("1_w1d5w")
 size = Vector3(64, 1, 64)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_w1d5w"]
 points = PackedVector3Array(32.5079, 1.02341, 32.5079, -32.5079, -1.00754, -32.5079, -32.5079, 1.02341, -32.5079, 32.5079, -1.00754, -32.5079, -32.5079, -1.00754, 32.5079, -32.5079, 1.02341, 32.5079, 32.5079, 1.02341, -32.5079, 32.5079, -1.00754, 32.5079)
 
 [node name="Prototype" type="Node"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_apa7g")
 
 [node name="environment" type="Node" parent="."]
 
