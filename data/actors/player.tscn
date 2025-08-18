@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://dm1rncnqte2l6"]
+
+[ext_resource type="Script" uid="uid://nb4aso8y24cv" path="res://scripts/player.gd" id="1_k8gaq"]
+[ext_resource type="PackedScene" uid="uid://bkrpphdyqnks4" path="res://data/weapons/weapon.tscn" id="2_j66a4"]
+[ext_resource type="Script" uid="uid://ddktkkenohw38" path="res://addons/godot-joystick-addon-main/joystick.gd" id="2_ojfkp"]
+[ext_resource type="Texture2D" uid="uid://r3wu52uppujj" path="res://data/weapons/crosshair.png" id="3_vpy3y"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m4jyq"]
+radius = 0.4
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_k8gaq")
+
+[node name="collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_m4jyq")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+
+[node name="RayCast" type="RayCast3D" parent="Head/Camera"]
+target_position = Vector3(0, 0, -3)
+
+[node name="hand" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.516, -0.364)
+top_level = true
+
+[node name="weapon" parent="Head/hand" instance=ExtResource("2_j66a4")]
+
+[node name="handpos" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.234, -0.364)
+
+[node name="canvas" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="canvas"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="canvas/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="canvas/UI/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("3_vpy3y")
+
+[node name="Joystick" type="Node2D" parent="canvas/UI"]
+position = Vector2(209, 686)
+script = ExtResource("2_ojfkp")
+_small_circle_radius = 50
+_big_circle_radius = 120
+metadata/_custom_type_script = "uid://ddktkkenohw38"
+
+[node name="Slider" type="Control" parent="canvas/UI"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1324.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[connection signal="gui_input" from="canvas/UI/Slider" to="." method="on_slider_slide"]

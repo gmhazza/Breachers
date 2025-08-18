@@ -1,6 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://nflj3dglkq8r"]
+[gd_scene load_steps=13 format=3 uid="uid://nflj3dglkq8r"]
 
-[ext_resource type="Material" uid="uid://dq1qmhaho1nlj" path="res://data/material/prototype_floor.tres" id="1_w1d5w"]
+[ext_resource type="Material" uid="uid://dq1qmhaho1nlj" path="res://data/material/prototype_black.tres" id="1_w1d5w"]
+[ext_resource type="PackedScene" uid="uid://dm1rncnqte2l6" path="res://data/actors/player.tscn" id="2_1ieo3"]
+[ext_resource type="Material" uid="uid://c231innwnge0o" path="res://data/material/prototype_blue.tres" id="2_apa7g"]
+[ext_resource type="PackedScene" uid="uid://crhvjeqkhhlt3" path="res://data/weapons/weapon_r.tscn" id="3_aqvhv"]
+[ext_resource type="PackedScene" uid="uid://cn8ial5vlaga6" path="res://data/weapons/silencer_r.tscn" id="4_f7oy8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w1d5w"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -20,6 +24,16 @@ size = Vector3(64, 1, 64)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_w1d5w"]
 points = PackedVector3Array(32.5079, 1.02341, 32.5079, -32.5079, -1.00754, -32.5079, -32.5079, 1.02341, -32.5079, 32.5079, -1.00754, -32.5079, -32.5079, -1.00754, 32.5079, -32.5079, 1.02341, 32.5079, 32.5079, 1.02341, -32.5079, 32.5079, -1.00754, 32.5079)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1ieo3"]
+material = ExtResource("2_apa7g")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 1.0
+radial_segments = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_apa7g"]
+points = PackedVector3Array(-0.0595974, 0.5, 0.954305, -0.0608763, -0.494686, -0.974783, -0.212734, -0.493676, -0.91188, 0.7071, -0.499383, 0.7071, 0.685837, 0.5, -0.685837, -0.954305, 0.5, 0.0595974, -0.706964, -0.499423, 0.707156, -0.566455, 0.5, -0.745434, 0.7071, -0.499383, -0.7071, 0.954305, 0.5, 0.0595974, -0.974783, -0.494686, -0.0608763, 0.974783, -0.494686, -0.0608763, 0.685837, 0.5, 0.685837, 0.0608763, -0.494686, 0.974783, 0.0595974, 0.5, -0.954305, -0.68565, 0.5, 0.685837, -0.706964, -0.499423, -0.707156, -0.745434, 0.5, -0.566455, 0.954305, 0.5, -0.0595974, 0.0595974, 0.5, 0.954305, -0.974783, -0.494686, 0.0608763, 0.0608763, -0.494686, -0.974783, 0.974783, -0.494686, 0.0608763, -0.0608763, -0.494686, 0.974783, -0.954305, 0.5, -0.0595974, -0.0595974, 0.5, -0.954305, -0.68565, 0.5, -0.685837, -0.745434, 0.5, 0.566455, -0.566455, 0.5, 0.745434, 0.745434, 0.5, -0.566455, 0.566455, 0.5, 0.745434, 0.566455, 0.5, -0.745434)
 
 [node name="Prototype" type="Node"]
 
@@ -41,3 +55,21 @@ skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="environment/floor/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_w1d5w")
+
+[node name="object0" type="MeshInstance3D" parent="environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, -6.163)
+mesh = SubResource("CylinderMesh_1ieo3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="environment/object0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="environment/object0/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_apa7g")
+
+[node name="weapon_r" parent="environment" instance=ExtResource("3_aqvhv")]
+transform = Transform3D(1, 0, 0, 0, 0.814673, 0.579921, 0, -0.579921, 0.814673, 0, 2.5619, -6.10446)
+
+[node name="silencer_r" parent="environment" instance=ExtResource("4_f7oy8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48731, -5.64873)
+
+[node name="Player" parent="." instance=ExtResource("2_1ieo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.471817, 0)
