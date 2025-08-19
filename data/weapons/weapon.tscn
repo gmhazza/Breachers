@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=4 uid="uid://bkrpphdyqnks4"]
 
+[ext_resource type="Script" uid="uid://bx5j8w5ql53sp" path="res://scripts/weapon.gd" id="1_gb7de"]
 [ext_resource type="Texture2D" uid="uid://wpaop3y7odpi" path="res://data/weapons/muzzle_flash.png" id="1_nfj5e"]
-[ext_resource type="PackedScene" uid="uid://cipxgtuelm33x" path="res://data/weapons/silencer.tscn" id="2_gb7de"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_khf8k"]
 resource_name = "Metal"
@@ -121,9 +121,11 @@ orientation = 0
 
 [node name="weapon" type="Node3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("1_gb7de")
 
 [node name="Revolver" type="MeshInstance3D" parent="."]
 transform = Transform3D(25, 0, 0, 0, -1.09278e-06, 25, 0, -25, -1.09278e-06, -0.0903156, -0.0332937, 0)
+layers = 2
 mesh = SubResource("ArrayMesh_6pm12")
 skeleton = NodePath("")
 
@@ -131,6 +133,7 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.363759, 0.0766374, 1.59004e-08)
 
 [node name="particle" type="CPUParticles3D" parent="muzzle"]
+layers = 2
 emitting = false
 amount = 1
 lifetime = 0.1
@@ -139,6 +142,3 @@ explosiveness = 1.0
 randomness = 1.0
 mesh = SubResource("QuadMesh_3pm0c")
 gravity = Vector3(0, 0, 0)
-
-[node name="Silencer" parent="muzzle" instance=ExtResource("2_gb7de")]
-transform = Transform3D(25, 0, 0, 0, -1.09278e-06, 25, 0, -25, -1.09278e-06, 0, 0, 0)

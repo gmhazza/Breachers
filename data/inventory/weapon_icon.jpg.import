@@ -2,27 +2,26 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6iudsm5grldg"
-path.etc2="res://.godot/imported/checker_orange_512x512.png-93138c7bda45341c16566c7ae78a14ce.etc2.ctex"
+uid="uid://30wxrjs4mokh"
+path="res://.godot/imported/weapon_icon.jpg-298dc61107c0d878f40671eaaaf99274.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/world/textures/checker_orange_512x512.png"
-dest_files=["res://.godot/imported/checker_orange_512x512.png-93138c7bda45341c16566c7ae78a14ce.etc2.ctex"]
+source_file="res://data/inventory/weapon_icon.jpg"
+dest_files=["res://.godot/imported/weapon_icon.jpg-298dc61107c0d878f40671eaaaf99274.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -32,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

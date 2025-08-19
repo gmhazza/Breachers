@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dm1rncnqte2l6"]
+[gd_scene load_steps=8 format=3 uid="uid://dm1rncnqte2l6"]
 
 [ext_resource type="Script" uid="uid://nb4aso8y24cv" path="res://scripts/player.gd" id="1_k8gaq"]
-[ext_resource type="PackedScene" uid="uid://bkrpphdyqnks4" path="res://data/weapons/weapon.tscn" id="2_j66a4"]
 [ext_resource type="Script" uid="uid://ddktkkenohw38" path="res://addons/godot-joystick-addon-main/joystick.gd" id="2_ojfkp"]
+[ext_resource type="Script" uid="uid://nna6doybfmmh" path="res://scripts/pick_visuals.gd" id="3_ucvu3"]
 [ext_resource type="Texture2D" uid="uid://r3wu52uppujj" path="res://data/weapons/crosshair.png" id="3_vpy3y"]
+[ext_resource type="Texture2D" uid="uid://b45d7oex1mbsn" path="res://icon.svg" id="4_axfhk"]
+[ext_resource type="PackedScene" uid="uid://cb6qn00hw08mo" path="res://data/inventory/inventory.tscn" id="6_ucvu3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m4jyq"]
 radius = 0.4
@@ -19,6 +21,7 @@ shape = SubResource("CapsuleShape3D_m4jyq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
+cull_mask = 1048573
 
 [node name="RayCast" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -3)
@@ -26,8 +29,6 @@ target_position = Vector3(0, 0, -3)
 [node name="hand" type="Node3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.516, -0.364)
 top_level = true
-
-[node name="weapon" parent="Head/hand" instance=ExtResource("2_j66a4")]
 
 [node name="handpos" type="Node3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.234, -0.364)
@@ -42,7 +43,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="canvas/UI"]
+[node name="viewport" type="SubViewportContainer" parent="canvas/UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,9 +51,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="canvas/UI/CenterContainer"]
+[node name="SubViewport" type="SubViewport" parent="canvas/UI/viewport"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(2200, 1080)
+render_target_update_mode = 4
+
+[node name="Camera" type="Camera3D" parent="canvas/UI/viewport/SubViewport"]
+top_level = true
+cull_mask = 1047554
+
+[node name="CenterContainer" type="CenterContainer" parent="canvas/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ucvu3")
+
+[node name="crosshair" type="TextureRect" parent="canvas/UI/CenterContainer"]
 layout_mode = 2
 texture = ExtResource("3_vpy3y")
+
+[node name="pick" type="TextureRect" parent="canvas/UI/CenterContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_axfhk")
 
 [node name="Joystick" type="Node2D" parent="canvas/UI"]
 position = Vector2(209, 686)
@@ -67,8 +92,12 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1324.0
+offset_left = -990.0
 grow_horizontal = 0
 grow_vertical = 2
 
+[node name="Inventory" parent="canvas/UI" instance=ExtResource("6_ucvu3")]
+layout_mode = 1
+
+[connection signal="gui_input" from="canvas/UI/CenterContainer/pick" to="." method="on_pick_pressed"]
 [connection signal="gui_input" from="canvas/UI/Slider" to="." method="on_slider_slide"]

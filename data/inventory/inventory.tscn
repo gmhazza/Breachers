@@ -1,0 +1,112 @@
+[gd_scene load_steps=6 format=3 uid="uid://cb6qn00hw08mo"]
+
+[ext_resource type="Texture2D" uid="uid://b45d7oex1mbsn" path="res://icon.svg" id="1_prbs8"]
+[ext_resource type="Script" uid="uid://crg7f4nso4ouk" path="res://scripts/inventory.gd" id="1_yfu22"]
+[ext_resource type="PackedScene" uid="uid://de1ml5obrb24y" path="res://data/inventory/slot.tscn" id="2_ew5ah"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yo2l7"]
+bg_color = Color(0, 0, 0, 0.54902)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yfu22"]
+bg_color = Color(0, 0, 0, 0.784314)
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yfu22")
+
+[node name="window" type="Panel" parent="."]
+custom_minimum_size = Vector2(1200, 800)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yo2l7")
+
+[node name="weapon" type="Panel" parent="window"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -350.0
+offset_right = 500.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(500, 275)
+theme_override_styles/panel = SubResource("StyleBoxFlat_yfu22")
+
+[node name="Label" type="Label" parent="window/weapon"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Weapon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hbox" type="HBoxContainer" parent="window"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = 220.0
+offset_right = 500.0
+offset_bottom = 370.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="slot0" parent="window/Hbox" instance=ExtResource("2_ew5ah")]
+layout_mode = 2
+
+[node name="slot1" parent="window/Hbox" instance=ExtResource("2_ew5ah")]
+layout_mode = 2
+
+[node name="slot2" parent="window/Hbox" instance=ExtResource("2_ew5ah")]
+layout_mode = 2
+
+[node name="slot3" parent="window/Hbox" instance=ExtResource("2_ew5ah")]
+layout_mode = 2
+
+[node name="slot4" parent="window/Hbox" instance=ExtResource("2_ew5ah")]
+layout_mode = 2
+
+[node name="exit" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1932.0
+offset_top = 850.0
+offset_right = 2060.0
+offset_bottom = 978.0
+texture = ExtResource("1_prbs8")
+
+[connection signal="gui_input" from="exit" to="." method="on_inventory_exit"]

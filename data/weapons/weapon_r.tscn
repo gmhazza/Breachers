@@ -106,7 +106,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_f1h0j")
 
-[node name="weapon_r" type="RigidBody3D" groups=["weapon"]]
+[node name="weapon_r" type="RigidBody3D" groups=["pickable", "weapon"]]
 
 [node name="collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05896, 0.00280762)

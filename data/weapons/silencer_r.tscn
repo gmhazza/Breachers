@@ -44,7 +44,7 @@ shadow_mesh = SubResource("ArrayMesh_2j7pm")
 [sub_resource type="BoxShape3D" id="BoxShape3D_t8t43"]
 size = Vector3(0.880371, 0.171143, 0.172119)
 
-[node name="silencer_r" type="RigidBody3D"]
+[node name="silencer_r" type="RigidBody3D" groups=["pickable", "silencer"]]
 
 [node name="Silencer" type="MeshInstance3D" parent="."]
 transform = Transform3D(50, 0, 0, 0, -2.18557e-06, 50, 0, -50, -2.18557e-06, -0.392878, 0, 0)
