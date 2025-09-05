@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cmiq8lbvy4nxg"
-path="res://.godot/imported/Silencer_1.fbx-9120d0dce9838c386ca468b57800d467.scn"
+uid="uid://7i4tf60dm7c1"
+path="res://.godot/imported/bullet1.fbx-a7834f2432c90b10b2a4508359040118.scn"
 
 [deps]
 
-source_file="res://data/weapons/Accessories/Silencer_1.fbx"
-dest_files=["res://.godot/imported/Silencer_1.fbx-9120d0dce9838c386ca468b57800d467.scn"]
+source_file="res://data/weapons/Accessories/bullet1.fbx"
+dest_files=["res://.godot/imported/bullet1.fbx-a7834f2432c90b10b2a4508359040118.scn"]
 
 [params]
 

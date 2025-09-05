@@ -1,14 +1,26 @@
-[gd_scene load_steps=8 format=3 uid="uid://dm1rncnqte2l6"]
+[gd_scene load_steps=11 format=3 uid="uid://dm1rncnqte2l6"]
 
 [ext_resource type="Script" uid="uid://nb4aso8y24cv" path="res://scripts/player.gd" id="1_k8gaq"]
+[ext_resource type="Material" uid="uid://0msny05v8n6q" path="res://data/material/player.tres" id="2_8i4e5"]
 [ext_resource type="Script" uid="uid://ddktkkenohw38" path="res://addons/godot-joystick-addon-main/joystick.gd" id="2_ojfkp"]
 [ext_resource type="Script" uid="uid://nna6doybfmmh" path="res://scripts/pick_visuals.gd" id="3_ucvu3"]
 [ext_resource type="Texture2D" uid="uid://r3wu52uppujj" path="res://data/weapons/crosshair.png" id="3_vpy3y"]
 [ext_resource type="Texture2D" uid="uid://b45d7oex1mbsn" path="res://icon.svg" id="4_axfhk"]
-[ext_resource type="PackedScene" uid="uid://cb6qn00hw08mo" path="res://data/inventory/inventory.tscn" id="6_ucvu3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m4jyq"]
 radius = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ucvu3"]
+material = ExtResource("2_8i4e5")
+radius = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_8i4e5"]
+size = Vector3(0.5, 0.2, 0.5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nm6qd"]
+material = ExtResource("2_8i4e5")
+radius = 0.05
+height = 0.5
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_k8gaq")
@@ -16,6 +28,14 @@ script = ExtResource("1_k8gaq")
 [node name="collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_m4jyq")
+
+[node name="body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_ucvu3")
+
+[node name="cam" type="MeshInstance3D" parent="body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.687283, -0.15727)
+mesh = SubResource("BoxMesh_8i4e5")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
@@ -30,8 +50,18 @@ target_position = Vector3(0, 0, -3)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1.516, -0.364)
 top_level = true
 
+[node name="R_arm" type="MeshInstance3D" parent="Head/hand"]
+transform = Transform3D(0.857149, -0.505307, 0.0998029, 0.514963, 0.844657, -0.146183, -0.0104321, 0.176695, 0.98421, 0.175394, -0.234294, 0.351667)
+mesh = SubResource("CapsuleMesh_nm6qd")
+skeleton = NodePath("../../../body")
+
+[node name="R_hand" type="MeshInstance3D" parent="Head/hand/R_arm"]
+transform = Transform3D(0.895801, 0.0371851, 0.442894, 0.298925, -0.787848, -0.538459, 0.328911, 0.614745, -0.716871, -0.0104268, -0.0335529, -0.137434)
+mesh = SubResource("CapsuleMesh_nm6qd")
+skeleton = NodePath("../../../../body")
+
 [node name="handpos" type="Node3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.234, -0.364)
+transform = Transform3D(0.996195, 0.00759612, 0.0868241, 0, 0.996195, -0.0871557, -0.0871557, 0.0868241, 0.992404, 0.3, -0.234, -0.364)
 
 [node name="canvas" type="CanvasLayer" parent="."]
 
@@ -96,8 +126,10 @@ offset_left = -990.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Inventory" parent="canvas/UI" instance=ExtResource("6_ucvu3")]
-layout_mode = 1
+[node name="fire" type="TouchScreenButton" parent="canvas/UI"]
+position = Vector2(1861, 648)
+texture_normal = ExtResource("4_axfhk")
 
 [connection signal="gui_input" from="canvas/UI/CenterContainer/pick" to="." method="on_pick_pressed"]
 [connection signal="gui_input" from="canvas/UI/Slider" to="." method="on_slider_slide"]
+[connection signal="pressed" from="canvas/UI/fire" to="." method="fire"]

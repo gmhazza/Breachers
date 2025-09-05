@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://de1ml5obrb24y"]
+[gd_scene load_steps=3 format=3 uid="uid://de1ml5obrb24y"]
 
-[ext_resource type="Texture2D" uid="uid://30wxrjs4mokh" path="res://data/inventory/weapon_icon.jpg" id="1_88gk7"]
 [ext_resource type="Script" uid="uid://bgvxxy001bmje" path="res://scripts/slot.gd" id="1_x53q0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prbs8"]
@@ -24,7 +23,6 @@ offset_right = 60.0
 offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_88gk7")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="."]

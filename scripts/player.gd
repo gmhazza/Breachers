@@ -6,9 +6,10 @@ class_name Player
 var target: Node3D
 var in_hand: Node3D
 
-@export var speed: float = 5.0
+@export var speed: float = 4.0
 @export var jumpForce: float = 4.5
 @export var sway: float = 25.0
+@export_range(0.0, 100.0, 0.1) var health: float = 100.0
 
 @export_category("Mouse Events")
 @export_range(0.0, 1.0) var sensitivity: float = 0.3
@@ -34,9 +35,6 @@ func on_pick_pressed(event: InputEvent) -> void:
 					in_hand = preload("res://data/weapons/weapon.tscn").instantiate()
 					hand.add_child(in_hand)
 					target.queue_free()
-			if target.is_in_group("silencer"):
-				if in_hand:
-					in_hand.add_muzzle()
 				target.queue_free()
 
 func on_slider_slide(event: InputEvent) -> void:
@@ -44,6 +42,10 @@ func on_slider_slide(event: InputEvent) -> void:
 		rotate_y(deg_to_rad(-1 * event.relative.x * sensitivity))
 		head.rotate_x(deg_to_rad(-1 * event.relative.y * sensitivity))
 		head.rotation.x = clampf(head.rotation.x, deg_to_rad(min_view_angle), deg_to_rad(max_view_angle))
+
+func fire() -> void:
+	if in_hand:
+		in_hand.fire.emit()
 
 func _process(delta: float) -> void:
 	hand.global_position = handpos.global_position

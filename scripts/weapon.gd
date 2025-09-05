@@ -1,19 +1,24 @@
 extends Node3D
 
 
-var is_muzzle_equipped = false
+signal fire
 
-var muzzle: Node3D
+var is_muzzle_equipped: bool = false
+var firing: bool = false
 
 
 func _ready() -> void:
-	muzzle = preload("res://data/weapons/silencer.tscn").instantiate()
+	fire.connect(fired)
 
-func add_muzzle() -> void:
-	if muzzle:
-		$muzzle.add_child(muzzle)
-		is_muzzle_equipped = true
+func fired() -> void:
+	if not firing:
+		firing = true
+		var bullet: Bullet = preload("res://data/weapons/bullet.tscn").instantiate()
+		bullet.global_transform = $muzzle.global_transform
+		$AnimationPlayer.play("fire")
+		get_tree().root.add_child(bullet)
 
-func delete_muzzle() -> void:
-	if muzzle and $muzzle.get_child(1):
-		$muzzle.get_child(1).queue_free()
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "fire":
+		firing = false

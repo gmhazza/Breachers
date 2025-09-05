@@ -1,0 +1,119 @@
+[gd_scene load_steps=9 format=3 uid="uid://cka7xb5pr8nk8"]
+
+[ext_resource type="Script" uid="uid://b1wmack5ai0j5" path="res://scripts/main_menu.gd" id="1_75vmx"]
+[ext_resource type="Material" uid="uid://dq1qmhaho1nlj" path="res://data/material/prototype_black.tres" id="1_gc3c5"]
+[ext_resource type="Material" uid="uid://ckj8uyjyt807a" path="res://data/material/prototype_green.tres" id="2_75vmx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gc3c5"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_75vmx"]
+sky_material = SubResource("ProceduralSkyMaterial_gc3c5")
+
+[sub_resource type="Environment" id="Environment_mhywd"]
+background_mode = 2
+sky = SubResource("Sky_75vmx")
+tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_mhywd"]
+material = ExtResource("1_gc3c5")
+size = Vector3(16, 1, 16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b8wwn"]
+material = ExtResource("2_75vmx")
+size = Vector3(16, 4, 1)
+
+[node name="main_menu" type="Node"]
+script = ExtResource("1_75vmx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mhywd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_mhywd")
+
+[node name="wall1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
+mesh = SubResource("BoxMesh_b8wwn")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999175, 0.0406027, 0, -0.0406027, 0.999175, 0, 1.20026, -3.70419)
+
+[node name="color" type="ColorRect" parent="."]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -769.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="title" type="Label" parent="color"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -340.0
+offset_right = 156.0
+offset_bottom = -252.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 128
+text = "Breachers"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="btns" type="VBoxContainer" parent="color"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -90.0
+offset_right = 128.0
+offset_bottom = 406.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="online" type="Button" parent="color/btns"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Online"
+
+[node name="offline" type="Button" parent="color/btns"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Offline"
+
+[node name="settings" type="Button" parent="color/btns"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Customizations"
+
+[node name="credit" type="Button" parent="color/btns"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Credit "
+
+[node name="quit" type="Button" parent="color/btns"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Quit"
+
+[connection signal="pressed" from="color/btns/online" to="." method="_on_online_pressed"]
+[connection signal="pressed" from="color/btns/offline" to="." method="_on_offline_pressed"]
+[connection signal="pressed" from="color/btns/quit" to="." method="_on_quit_pressed"]

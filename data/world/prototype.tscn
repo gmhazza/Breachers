@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://nflj3dglkq8r"]
+[gd_scene load_steps=22 format=3 uid="uid://nflj3dglkq8r"]
 
 [ext_resource type="Material" uid="uid://dq1qmhaho1nlj" path="res://data/material/prototype_black.tres" id="1_w1d5w"]
 [ext_resource type="PackedScene" uid="uid://dm1rncnqte2l6" path="res://data/actors/player.tscn" id="2_1ieo3"]
@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://crhvjeqkhhlt3" path="res://data/weapons/weapon_r.tscn" id="3_aqvhv"]
 [ext_resource type="Material" uid="uid://cn6mv3hloiy7w" path="res://data/material/prototype_orange.tres" id="3_cxxii"]
 [ext_resource type="Material" uid="uid://ckj8uyjyt807a" path="res://data/material/prototype_green.tres" id="4_euslw"]
-[ext_resource type="PackedScene" uid="uid://cn8ial5vlaga6" path="res://data/weapons/silencer_r.tscn" id="4_f7oy8"]
+[ext_resource type="Script" uid="uid://eyrrin0dstio" path="res://scripts/ai_enemy.gd" id="7_euslw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w1d5w"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -51,6 +51,19 @@ size = Vector3(2, 2, 2)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_i6o1u"]
 points = PackedVector3Array(-1, -1, -1, 0.0293034, 0.941393, 0.941393, 0.147043, 0.705915, 0.94122, -1, -1, 1, 1, -1, -1, -0.0293034, 0.941393, -0.941393, 1, -1, 1, -0.0293034, 0.941393, 0.941393, 0.0293034, 0.941393, -0.941393)
+
+[sub_resource type="Curve3D" id="Curve3D_2ubxx"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, -10, 0, 0, 0, 0, 0, 0, 10, 0, -20, 0, 0, 0, 0, 0, 0, -10, 0, -20, 0, 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 7
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_euslw"]
+radius = 0.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2ubxx"]
+radius = 0.4
 
 [node name="Prototype" type="Node"]
 
@@ -104,8 +117,22 @@ shape = SubResource("ConvexPolygonShape3D_i6o1u")
 [node name="weapon_r" parent="environment" instance=ExtResource("3_aqvhv")]
 transform = Transform3D(1, 0, 0, 0, 0.814673, 0.579921, 0, -0.579921, 0.814673, 0, 2.5619, -6.10446)
 
-[node name="silencer_r" parent="environment" instance=ExtResource("4_f7oy8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.48731, -5.64873)
-
 [node name="Player" parent="." instance=ExtResource("2_1ieo3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.471817, 0)
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.36031)
+curve = SubResource("Curve3D_2ubxx")
+script = ExtResource("7_euslw")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="enemy" type="CharacterBody3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D/enemy"]
+mesh = SubResource("CapsuleMesh_euslw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/enemy"]
+shape = SubResource("CapsuleShape3D_2ubxx")
